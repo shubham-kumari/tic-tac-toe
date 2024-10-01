@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+
+import './assets/index.css'
+import Game from './assets/Game';
+import Players from './assets/components/Players';
+import GameBoard from './assets/components/GameBoard';
+import { useState } from 'react';
 
 function App() {
+  const [ activePlayer, setActivePlayer] = useState('X');
+
+  function handleSelectSquare(){
+    setActivePlayer((currPlayer) => currPlayer === 'X' ? 'O' : 'X' )
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Game />
+    <main>
+      <div id='game-container'>
+      <ol id="players" className='highlight-player'>
+        <Players initialName="player1" symbol="X" isActive={activePlayer === 'X'} />
+        <Players initialName="player2" symbol="O" isActive={activePlayer === 'O'} />
+      </ol>
+
+      {/* GAME BOARD */}
+      <GameBoard onSelectSquare={handleSelectSquare} activePlayerSymbol={activePlayer} />
+      </div>
+
+      LOG
+    </main>
+    </>
   );
 }
 
